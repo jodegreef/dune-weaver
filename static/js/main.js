@@ -1893,11 +1893,26 @@ async function loadStartupTime() {
 // Save Startup Days
 async function setStartupDays() {
     const days = [];
-    if (document.getElementById('Weekdays').checked){
-        days.push('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday');
+    if (document.getElementById('Monday').checked){
+        days.push('Monday');
     }
-    if (document.getElementById('Weekend').checked) {
-        days.push('Saturday', 'Sunday');
+    if (document.getElementById('Tuesday').checked){
+        days.push('Tuesday');
+    }
+    if (document.getElementById('Wednesday').checked){
+        days.push('Wednesday');
+    }
+    if (document.getElementById('Thursday').checked){
+        days.push('Thursday');
+    }
+    if (document.getElementById('Friday').checked){
+        days.push('Friday');
+    }
+    if (document.getElementById('Saturday').checked){
+        days.push('Saturday');
+    }
+    if (document.getElementById('Sunday').checked) {
+        days.push('Sunday');
     }
     try {
         const response = await fetch('/set_startup_days', {
