@@ -1890,6 +1890,18 @@ async function loadStartupTime() {
     }
 }
 
+async function loadStartupPlaylist() {
+    const hourInput = document.getElementById('startup_hour');
+    try {
+        const response = await fetch('/get_startup_playlist');
+        const data = await response.json();
+        document.getElementById("startup_playlist").value = data.startup_playlist;
+    } catch (error) {
+            logMessage(`Error fetching startup playlist from backend: ${error.message}`, LOG_TYPE.ERROR);
+    }
+}
+
+
 async function loadStartupDays() {
     const mondayInput = document.getElementById('Monday');
     try {
@@ -1969,6 +1981,9 @@ async function populateStartupPlaylistDropdown() {
             option.textContent = playlist;
             select.appendChild(option);
         });
+
+    await loadStartupPlaylist();
+
     } catch (error) {
         logMessage('Failed to load playlists: ' + error, LOG_TYPE.ERROR);
     }

@@ -63,7 +63,7 @@ async def start_at_time(target_hour=8, target_minute=0):
                     else:
                         asyncio.create_task(playlist_manager.run_playlist(
                             default_playlist,
-                            pause_time= 600, #10 minutes in seconds
+                            pause_time= 7200, #2h in seconds
                             clear_pattern= 'adaptive',#adaptive clear pattern
                             run_mode='loop',
                             shuffle=True))
@@ -727,6 +727,12 @@ async def set_wled_ip(request: WLEDRequest):
 @app.get("/get_startup_days")
 async def get_startup_time():
     return {"success": True, "startup_days": state.startup_days}
+
+
+
+@app.get("/get_startup_playlist")
+async def get_startup_playlist():
+    return {"success": True, "startup_playlist": state.startup_playlist}
 
 
 @app.get("/get_startup_time")
