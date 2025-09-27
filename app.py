@@ -732,7 +732,7 @@ async def get_startup_time():
 
 @app.get("/get_startup_playlist")
 async def get_startup_playlist():
-    return {"success": True, "startup_playlist": state.startup_playlist}
+    return {"success": True, "startup_playlist": state.default_playlist}
 
 
 @app.get("/get_startup_time")
