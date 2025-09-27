@@ -724,6 +724,11 @@ async def set_wled_ip(request: WLEDRequest):
     logger.info(f"WLED IP updated: {request.wled_ip}")
     return {"success": True, "wled_ip": state.wled_ip}
 
+@app.get("/get_startup_days")
+async def get_startup_time():
+    return {"success": True, "startup_days": state.startup_days}
+
+
 @app.get("/get_startup_time")
 async def get_startup_time():
     return {"success": True, "startup_hour": state.startup_hour, "startup_minute": state.startup_minute}

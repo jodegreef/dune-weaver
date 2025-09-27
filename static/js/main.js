@@ -1890,6 +1890,29 @@ async function loadStartupTime() {
     }
 }
 
+async function loadStartupDays() {
+    const mondayInput = document.getElementById('Monday');
+    try {
+        const response = await fetch('/get_startup_days');
+        const data = await response.json();
+        // if ((!isNaN(data.startup_hour) && !isNaN(data.startup_minute)) || (data.startup_hour === "" && data.startup_minute === "")) {
+        //     console.log(`Fetched startup time: ${data.startup_hour}:${data.startup_minute}`);
+        //     var startup_hour = data.startup_hour;
+        //     var startup_minute = data.startup_minute;
+        // }
+            document.getElementById('Monday').checked = data.startup_days.includes('Monday');
+            document.getElementById('Tuesday').checked = data.startup_days.includes('Tuesday');
+            document.getElementById('Wednesday').checked = data.startup_days.includes('Wednesday');
+            document.getElementById('Thursday').checked = data.startup_days.includes('Thursday');
+            document.getElementById('Friday').checked = data.startup_days.includes('Friday');
+            document.getElementById('Saturday').checked = data.startup_days.includes('Saturday');
+            document.getElementById('Sunday').checked = data.startup_days.includes('Sunday');
+        // }
+    } catch (error) {
+            logMessage(`Error fetching startup days from backend: ${error.message}`, LOG_TYPE.ERROR);
+    }
+}
+
 // Save Startup Days
 async function setStartupDays() {
     const days = [];
@@ -2306,6 +2329,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateWledUI();
     loadStartupTime(); // Load startup time
     loadShutdownTime(); // Load shutdown time
+    loadStartupDays(); // Load startup dates
 
     // Initialize WebSocket connection for status updates
     connectStatusWebSocket();
