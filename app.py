@@ -42,13 +42,14 @@ async def start_at_time(target_hour=8, target_minute=0):
         if datetime.now().strftime('%A') not in target_days:
             logger.info(f"Today is not a startup day. Skipping start check.")
             await asyncio.sleep(60)
+            continue;
         else:
             logger.info(f"Today is a startup day: {datetime.now().strftime('%A')}. Checking for start time.")
         target_hour = state.startup_hour
         target_minute = state.startup_minute
         default_playlist = state.default_playlist
         now = datetime.now()
-        if target_hour is "" or target_minute is "":
+        if target_hour == "" or target_minute == "":
             logger.info("Startup time not set, skipping start check.")
         else:
             logger.info(f"Checking if it's time to start operations: starttime: {target_hour}:{target_minute}...current time: {now.hour}:{+now.minute}")
@@ -79,7 +80,7 @@ async def stop_at_time(target_hour=17, target_minute=0):
         target_hour = state.shutdown_hour
         target_minute = state.shutdown_minute
         now = datetime.now()
-        if target_hour is "" or target_minute is "":
+        if target_hour == "" or target_minute == "":
             logger.info("Shutdown time not set, skipping stop check.")
         else:
             logger.info(f"Checking if it's time to stop operations: stoptime: {target_hour}:{target_minute}...current time: {now.hour}:{+now.minute}")
@@ -655,8 +656,8 @@ async def set_startup_time(request: Request):
     if hour is (None and not "") or minute is (None and not ""):
         return {"success": False, "error": "Missing hour or minute"}
     try:
-        state.startup_hour = hour if hour is not "" else ""
-        state.startup_minute = minute if minute is not "" else ""
+        state.startup_hour = hour if hour != "" else ""
+        state.startup_minute = minute if minute != "" else ""
         state.save()
         logger.info(f"Startup time set to {state.startup_hour}:{state.startup_minute}")
         return {"success": True}
@@ -701,8 +702,8 @@ async def set_shutdown_time(request: Request):
     if hour is (None and not "") or minute is (None and not ""):
         return {"success": False, "error": "Missing hour or minute"}
     try:
-        state.shutdown_hour = hour if hour is not "" else ""
-        state.shutdown_minute = minute if minute is not "" else ""
+        state.shutdown_hour = hour if hour != "" else ""
+        state.shutdown_minute = minute if minute != "" else ""
         state.save()
         logger.info(f"Shutdown time set to {state.shutdown_hour}:{state.shutdown_minute}")
         return {"success": True}
